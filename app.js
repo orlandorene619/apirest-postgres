@@ -4,6 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var app = express();
 
+const { Pool} = require('pg');
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+});
+
 
 app.use(bodyParser.json({limit: '50mb'} ));
 app.use(bodyParser.urlencoded({limit: '50mb', extended:true }));
@@ -21,6 +27,7 @@ app.use((req, res, next) => {
 require('./servicio/routes/usuarios')(app)
 require('./servicio/routes/medicamentos')(app)
 require('./servicio/routes/consultas')(app)
+
 
 
 module.exports = app;
